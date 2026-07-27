@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // this widget can be Rebuild in this code I return in this method
+    // this widget can be Rebuild in this code I return in this method.
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: ThemeController.themeNotifier,
       builder: (BuildContext context, ThemeMode themeMode, Widget? child) {
