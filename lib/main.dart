@@ -3,8 +3,8 @@ import 'package:tasky/core/services/preferences_manager.dart';
 import 'package:tasky/core/theme/dark_theme.dart';
 import 'package:tasky/core/theme/light_theme.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
-import 'package:tasky/screenes/main_screen.dart';
-import 'package:tasky/screenes/welcome_screen.dart';
+import 'package:tasky/features/Navigation/main_screen.dart';
+import 'package:tasky/features/welcome/welcome_screen.dart';
 
 // Default value of Theme
 void main() async {
