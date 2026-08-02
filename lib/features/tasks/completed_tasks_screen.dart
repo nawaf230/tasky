@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/services/preferences_manager.dart';
 import 'package:tasky/models/task_model.dart';
 import 'package:tasky/core/components/task_list_widget.dart';
@@ -27,7 +28,7 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
       isLoading = true;
     });
 
-    final finalTask = PreferencesManager().getString("tasks");
+    final finalTask = PreferencesManager().getString(StorageKey.tasks);
 
     if (finalTask != null) {
       final taskAfterDecode = jsonDecode(finalTask) as List<dynamic>;
@@ -53,7 +54,7 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
     List<TaskModel> tasks = [];
 
     if (id == null) return;
-    final finalTask = PreferencesManager().getString("tasks");
+    final finalTask = PreferencesManager().getString(StorageKey.tasks);
     if (finalTask != null) {
       final taskAfterDecode =
           jsonDecode(finalTask) as List<dynamic>; // List<Map<String, dynamic>>
@@ -68,7 +69,7 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
       });
 
       final updatedTask = tasks.map((e) => e.toJson()).toList();
-      PreferencesManager().setString("tasks", jsonEncode(updatedTask));
+      PreferencesManager().setString(StorageKey.tasks, jsonEncode(updatedTask));
     }
     return;
   }
@@ -100,7 +101,7 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
                       });
 
                       final String? allData = PreferencesManager().getString(
-                        "tasks",
+                        StorageKey.tasks,
                       );
 
                       if (allData != null) {
@@ -117,7 +118,7 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
 
                         allDataList[newIndex] = completedTasks[index];
                         await PreferencesManager().setString(
-                          "tasks",
+                          StorageKey.tasks,
                           jsonEncode(allDataList),
                         );
                         // print("====================$allDataList");

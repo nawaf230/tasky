@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/services/preferences_manager.dart';
 import 'package:tasky/models/task_model.dart';
 import 'package:tasky/core/components/task_list_widget.dart';
@@ -27,7 +28,7 @@ class _TasksScreenState extends State<TasksScreen> {
       isLoading = true;
     });
 
-    final finalTask = PreferencesManager().getString("tasks");
+    final finalTask = PreferencesManager().getString(StorageKey.tasks);
 
     if (finalTask != null) {
       final taskAfterDecode =
@@ -52,7 +53,7 @@ class _TasksScreenState extends State<TasksScreen> {
     List<TaskModel> tasks = [];
 
     if (id == null) return;
-    final finalTask = PreferencesManager().getString("tasks");
+    final finalTask = PreferencesManager().getString(StorageKey.tasks);
     if (finalTask != null) {
       final taskAfterDecode =
           jsonDecode(finalTask) as List<dynamic>; // List<Map<String, dynamic>>
@@ -67,7 +68,7 @@ class _TasksScreenState extends State<TasksScreen> {
       });
 
       final updatedTask = tasks.map((e) => e.toJson()).toList();
-      PreferencesManager().setString("tasks", jsonEncode(updatedTask));
+      PreferencesManager().setString(StorageKey.tasks, jsonEncode(updatedTask));
     }
     return;
   }
@@ -99,7 +100,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         todoTasks[index].isDone = value ?? false;
                       });
                       final String? allData = PreferencesManager().getString(
-                        "tasks",
+                        StorageKey.tasks,
                       );
 
                       if (allData != null) {
@@ -116,7 +117,7 @@ class _TasksScreenState extends State<TasksScreen> {
 
                         allDataList[newIndex] = todoTasks[index];
                         await PreferencesManager().setString(
-                          "tasks",
+                          StorageKey.tasks,
                           jsonEncode(allDataList),
                         );
                         // print("====================$allDataList");

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/services/preferences_manager.dart';
 import 'package:tasky/models/task_model.dart';
 import 'package:tasky/core/components/task_list_widget.dart';
@@ -27,7 +28,7 @@ class _HighPriorityScreenState extends State<HighPriorityScreen> {
       isLoading = true;
     });
 
-    final finalTask = PreferencesManager().getString("tasks");
+    final finalTask = PreferencesManager().getString(StorageKey.tasks);
 
     if (finalTask != null) {
       final taskAfterDecode =
@@ -55,7 +56,7 @@ class _HighPriorityScreenState extends State<HighPriorityScreen> {
       highPriorityTasks[index].isDone = value ?? false;
     });
 
-    final String? allData = PreferencesManager().getString("tasks");
+    final String? allData = PreferencesManager().getString(StorageKey.tasks);
     if (allData != null) {
       //  allDataList : Here I Update the Data then I store in Shared Preferences
       final List<TaskModel> allDataList =
@@ -69,7 +70,7 @@ class _HighPriorityScreenState extends State<HighPriorityScreen> {
       );
 
       allDataList[newIndex] = highPriorityTasks[index];
-      await PreferencesManager().setString("tasks", jsonEncode(allDataList));
+      await PreferencesManager().setString(StorageKey.tasks, jsonEncode(allDataList));
     }
     return;
   }
@@ -79,7 +80,7 @@ class _HighPriorityScreenState extends State<HighPriorityScreen> {
     List<TaskModel> tasks = [];
 
     if (id == null) return;
-    final finalTask = PreferencesManager().getString("tasks");
+    final finalTask = PreferencesManager().getString(StorageKey.tasks);
     if (finalTask != null) {
       final taskAfterDecode =
           jsonDecode(finalTask) as List<dynamic>; // List<Map<String, dynamic>>
@@ -94,7 +95,7 @@ class _HighPriorityScreenState extends State<HighPriorityScreen> {
       });
 
       final updatedTask = tasks.map((e) => e.toJson()).toList();
-      PreferencesManager().setString("tasks", jsonEncode(updatedTask));
+      PreferencesManager().setString(StorageKey.tasks, jsonEncode(updatedTask));
     }
     return;
   }
