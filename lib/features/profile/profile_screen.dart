@@ -22,7 +22,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _motivationQuote;
   String? userImagePath;
   bool isLoding = true;
-  File? _selectedImage;
 
   void _loadData() async {
     setState(() {
@@ -44,6 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // hint the bice code in method build not working if else isLoading is false.
   @override
   Widget build(BuildContext context) {
+    print("==========build this scrreen");
     return isLoding
         ? Center(child: CircularProgressIndicator(color: Color(0xFFFFFCFC)))
         : Padding(
@@ -95,13 +95,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             GestureDetector(
                               onTap: () async {
                                 showImageSourceDialog(context, (selectedFile) {
+                                  _saveImage(selectedFile);
                                   setState(() {
-                                    _selectedImage = File(selectedFile.path);
+                                    userImagePath = selectedFile.path;
                                   });
                                   print(
                                     "a===================${selectedFile.path}",
                                   );
-                                  _saveImage(selectedFile);
                                 });
                               },
                               child: Container(
@@ -286,7 +286,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final Directory appDir = await getApplicationDocumentsDirectory();
     final newFile = await File(file.path).copy("${appDir.path}/${file.name}");
     await PreferencesManager().setString("user_image", newFile.path);
-    _loadData();
   }
 }
 
