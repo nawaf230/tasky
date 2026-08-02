@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/services/preferences_manager.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widget/custom_svg_picture.dart';
@@ -25,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _loadData() async {
     setState(() {
-      _username = PreferencesManager().getString("username") ?? "";
+      _username = PreferencesManager().getString(StorageKey.username) ?? "";
       _motivationQuote =
           PreferencesManager().getString("motivationquote") ??
           "One task at a time. One step closer.";
@@ -208,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Divider(),
                 ListTile(
                   onTap: () async {
-                    await PreferencesManager().remove("username");
+                    await PreferencesManager().remove(StorageKey.username);
                     await PreferencesManager().remove("motivationquote");
                     await PreferencesManager().remove("tasks");
 

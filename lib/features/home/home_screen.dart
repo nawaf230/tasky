@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/services/preferences_manager.dart';
 import 'package:tasky/core/widget/custom_svg_picture.dart';
 import 'package:tasky/models/task_model.dart';
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _loadData() async {
     if (_username == null || _motivationQuote == null) {
       setState(() {
-        _username = PreferencesManager().getString("username");
+        _username = PreferencesManager().getString(StorageKey.username);
         _motivationQuote = PreferencesManager().getString("motivationquote");
         userImagePath = PreferencesManager().getString("user_image");
       });
