@@ -14,7 +14,7 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  final TextEditingController _taskDescriptionController =
+  final TextEditingController taskDescriptionController =
       TextEditingController();
 
   final TextEditingController _taskNameController = TextEditingController();
@@ -26,8 +26,6 @@ class _AddTaskState extends State<AddTask> {
   @override
   void dispose() {
     super.dispose();
-    _taskNameController.dispose();
-    _taskDescriptionController.dispose();
   }
 
   @override
@@ -59,7 +57,7 @@ class _AddTaskState extends State<AddTask> {
                 const SizedBox(height: 20),
                 CustomTextFormField(
                   title: "Task Description",
-                  controller: _taskDescriptionController,
+                  controller: taskDescriptionController,
                   hintText:
                       "Finish onboarding UI and hand off to devs by Thursday.",
                   maxLines: 5,
@@ -101,7 +99,7 @@ class _AddTaskState extends State<AddTask> {
                       final TaskModel modle = TaskModel(
                         id: listTasks.length + 1,
                         taskName: _taskNameController.text,
-                        taskDescription: _taskDescriptionController.text,
+                        taskDescription: taskDescriptionController.text,
                         isHighPriority: _isHighPriority,
                       );
                       //  convert to json
@@ -110,7 +108,10 @@ class _AddTaskState extends State<AddTask> {
                       listTasks.add(modle.toJson());
                       final taskEncode = jsonEncode(listTasks);
                       // print("================List Tasks : $listTasks");
-                      await PreferencesManager().setString(StorageKey.tasks, taskEncode);
+                      await PreferencesManager().setString(
+                        StorageKey.tasks,
+                        taskEncode,
+                      );
                       Navigator.of(context).pop(true);
                     }
                   },

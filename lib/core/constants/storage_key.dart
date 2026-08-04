@@ -3,4 +3,5 @@ class StorageKey {
   static const motivationQuote = "motivationquote";
   static const userImage = "user_image";
   static const tasks = "tasks";
+  static const theme = "theme";
 }

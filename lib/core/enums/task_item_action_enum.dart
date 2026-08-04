@@ -5,5 +5,5 @@ enum TaskItemActionEnum {
 
   final String name;
 
-  const  TaskItemActionEnum({required this.name});
+  const TaskItemActionEnum({required this.name});
 }

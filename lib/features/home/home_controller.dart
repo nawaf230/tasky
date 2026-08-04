@@ -17,11 +17,11 @@ class HomeController extends ChangeNotifier {
   double percent = 0;
 
   void init() {
-    loadData();
+    loadUserData();
     loadTask();
   }
 
-  void loadData() async {
+  void loadUserData() async {
     if (username == null || motivationQuote == null) {
       username = PreferencesManager().getString(StorageKey.username);
       motivationQuote = PreferencesManager().getString(
@@ -58,7 +58,7 @@ class HomeController extends ChangeNotifier {
   void calculatePercent() {
     totalTasks = tasks.length;
     totalDoneTasks = tasks.where((element) => element.isDone).length;
-    // calc the avrg
+    // calc the average
     percent = totalTasks == 0 ? 0 : totalDoneTasks / totalTasks;
 
     notifyListeners();
