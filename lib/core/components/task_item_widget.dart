@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/enums/task_item_action_enum.dart';
 import 'package:tasky/core/services/preferences_manager.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
-import 'package:tasky/core/widget/custom_check_box.dart';
-import 'package:tasky/core/widget/custom_text_form_field.dart';
+import 'package:tasky/core/widgets/custom_check_box.dart';
+import 'package:tasky/core/widgets/custom_text_form_field.dart';
 import 'package:tasky/models/task_model.dart';
 
 class TaskItemWidget extends StatelessWidget {
@@ -42,12 +43,12 @@ class TaskItemWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SizedBox(width: 8),
+          const Gap(8),
           CustomCheckBox(
             value: model.isDone,
             onChanged: (bool? value) => onChanged(value),
           ),
-          SizedBox(width: 8),
+          const Gap(8),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +189,7 @@ class TaskItemWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20),
+                      const Gap(20),
                       CustomTextFormField(
                         title: "Task Name",
                         controller: taskNameController,
@@ -201,7 +202,7 @@ class TaskItemWidget extends StatelessWidget {
                         },
                         maxLines: 1,
                       ),
-                      const SizedBox(height: 20),
+                      const Gap(20),
                       CustomTextFormField(
                         title: "Task Description",
                         controller: taskDescriptionController,
@@ -209,7 +210,7 @@ class TaskItemWidget extends StatelessWidget {
                             "Finish onboarding UI and hand off to devs by Thursday.",
                         maxLines: 5,
                       ),
-                      const SizedBox(height: 20),
+                      const Gap(20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -227,7 +228,7 @@ class TaskItemWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 25),
+                      const Gap(25),
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(
@@ -260,8 +261,6 @@ class TaskItemWidget extends StatelessWidget {
                             listTasks[index] = newModle;
 
                             //  convert to json
-                            print("modle to Json = ${modle.toJson()}");
-                            print("=====$listTasks");
 
                             await PreferencesManager().setString(
                               StorageKey.tasks,

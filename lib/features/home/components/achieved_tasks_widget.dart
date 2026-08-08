@@ -1,17 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
-import 'package:tasky/features/home/home_controller.dart';
+import 'package:tasky/features/tasks/controllers/tasks_controller.dart';
 
 class AchievedTasksWidget extends StatelessWidget {
   const AchievedTasksWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (BuildContext context, HomeController controller, Widget? child) {
+    return Consumer<TasksController>(
+      builder: (BuildContext context, TasksController controller, Widget? child) {
         return Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
@@ -34,12 +35,11 @@ class AchievedTasksWidget extends StatelessWidget {
                     "Achieved Tasks",
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  SizedBox(width: 4),
+                  const Gap(4),
                   Text(
                     "${controller.totalDoneTasks} Out of ${controller.totalTasks} Done",
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  Text("data"),
                 ],
               ),
               Stack(
@@ -52,8 +52,8 @@ class AchievedTasksWidget extends StatelessWidget {
                       width: 48,
                       child: CircularProgressIndicator(
                         value: controller.percent,
-                        backgroundColor: Color(0xFF6D6D6D),
-                        valueColor: AlwaysStoppedAnimation<Color>(
+                        backgroundColor: const Color(0xFF6D6D6D),
+                        valueColor: const AlwaysStoppedAnimation<Color>(
                           Color(0xFF15B86C),
                         ),
                         strokeWidth: 4,

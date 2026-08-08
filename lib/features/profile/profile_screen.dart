@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/services/preferences_manager.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
-import 'package:tasky/core/widget/custom_svg_picture.dart';
+import 'package:tasky/core/widgets/custom_svg_picture.dart';
 import 'package:tasky/features/profile/user_details_screen.dart';
 import 'package:tasky/features/welcome/welcome_screen.dart';
 
@@ -44,7 +45,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // hint the bice code in method build not working if else isLoading is false.
   @override
   Widget build(BuildContext context) {
-    print("==========build this scrreen");
     return isLoding
         ? Center(child: CircularProgressIndicator(color: Color(0xFFFFFCFC)))
         : Padding(
@@ -61,12 +61,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 18),
+                const Gap(18),
 
                 Center(
                   child: Column(
                     children: [
-                      SizedBox(height: 8),
+                      const Gap(8),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(100)),
@@ -100,9 +100,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   setState(() {
                                     userImagePath = selectedFile.path;
                                   });
-                                  print(
-                                    "a===================${selectedFile.path}",
-                                  );
                                 });
                               },
                               child: Container(
@@ -128,12 +125,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const Gap(8),
                       Text(
                         _username,
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
-                      SizedBox(height: 4),
+                      const Gap(4),
 
                       Text(
                         _motivationQuote == null
@@ -144,12 +141,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 24),
+                const Gap(24),
                 Text(
                   "Profile Info",
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
-                SizedBox(height: 20),
+                const Gap(20),
                 ListTile(
                   onTap: () async {
                     bool? result = await Navigator.push(
@@ -238,53 +235,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
   }
 
-  void _showButtomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.9,
-            minHeight: MediaQuery.of(context).size.height * 0.3,
-          ),
-          child: ListView.builder(
-            itemCount: 1,
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.green,
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  void _showDateTime(BuildContext context) async {
-    final DateTime? selectedDate = await showDatePicker(
-      initialDate: DateTime(2006, 9, 13),
-      context: context,
-      firstDate: DateTime(DateTime.now().year - 100),
-      lastDate: DateTime(DateTime.now().year + 5),
-    );
-    print("==================$selectedDate");
-
-    final time = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay(
-        hour: DateTime.now().hour,
-        minute: DateTime.now().minute,
-      ),
-    );
-  }
-
   void _saveImage(XFile file) async {
     final Directory appDir = await getApplicationDocumentsDirectory();
     final newFile = await File(file.path).copy("${appDir.path}/${file.name}");
@@ -313,11 +263,7 @@ void showImageSourceDialog(BuildContext context, Function(XFile) selectedFile) {
               }
             },
             child: Row(
-              children: [
-                Icon(Icons.camera_alt),
-                SizedBox(width: 8),
-                Text("Camera"),
-              ],
+              children: [Icon(Icons.camera_alt), const Gap(8), Text("Camera")],
             ),
           ),
           SimpleDialogOption(
@@ -333,7 +279,7 @@ void showImageSourceDialog(BuildContext context, Function(XFile) selectedFile) {
             child: Row(
               children: [
                 Icon(Icons.photo_library_outlined),
-                SizedBox(width: 8),
+                const Gap(8),
                 Text("Gallery"),
               ],
             ),

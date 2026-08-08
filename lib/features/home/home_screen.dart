@@ -1,13 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'package:tasky/core/widget/custom_svg_picture.dart';
-import 'package:tasky/features/home/home_controller.dart';
+import 'package:tasky/core/widgets/custom_svg_picture.dart';
+import 'package:tasky/features/home/controllers/home_controller.dart';
 import 'package:tasky/features/add_task/add_task_screen.dart';
 import 'package:tasky/features/home/components/high_priority_tasks_widget.dart';
 import 'package:tasky/features/home/components/achieved_tasks_widget.dart';
 import 'package:tasky/features/home/components/sliver_task_list_widget.dart';
+import 'package:tasky/features/tasks/controllers/tasks_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,156 +17,149 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeController>(
-      create: (BuildContext context) => HomeController()..init(),
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Selector<HomeController, String?>(
-                            selector: (BuildContext context, controller) =>
-                                controller.userImagePath,
-                            builder: (context, String? userImage, child) {
-                              return CircleAvatar(
-                                radius: 22,
-                                backgroundColor: Colors.transparent,
-                                backgroundImage: userImage != null
-                                    ? FileImage(File(userImage))
-                                    : null,
-                                child: ClipOval(
-                                  child: userImage == null
-                                      ? CustomSvgPicture.withoutColor(
-                                          path: "assets/images/person.svg",
-                                        )
+      create: (BuildContext _) => HomeController()..init(),
+      builder: (context, child) {
+        final controller = context.read<HomeController>();
+        return Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Selector<HomeController, String?>(
+                              selector: (BuildContext context, controller) =>
+                                  controller.userImagePath,
+                              builder: (context, String? userImage, child) {
+                                return CircleAvatar(
+                                  radius: 22,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage: userImage != null
+                                      ? FileImage(File(userImage))
                                       : null,
+                                  child: ClipOval(
+                                    child: userImage == null
+                                        ? CustomSvgPicture.withoutColor(
+                                            path: "assets/images/person.svg",
+                                          )
+                                        : null,
+                                  ),
+                                );
+                              },
+                            ),
+                            const Gap(8),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Selector<HomeController, String?>(
+                                  selector:
+                                      (
+                                        BuildContext context,
+                                        HomeController controller,
+                                      ) => controller.username,
+                                  builder:
+                                      (
+                                        BuildContext context,
+                                        String? username,
+                                        child,
+                                      ) {
+                                        return Text(
+                                          username == null
+                                              ? "Good Evening ,"
+                                              : "Good Evening ,$username",
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.titleMedium,
+                                        );
+                                      },
                                 ),
-                              );
-                            },
-                          ),
-                          const SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
 
-                            children: [
-                              Selector<HomeController, String?>(
-                                selector:
-                                    (
-                                      BuildContext context,
-                                      HomeController controller,
-                                    ) => controller.username,
-                                builder:
-                                    (
-                                      BuildContext context,
-                                      String? username,
-                                      child,
-                                    ) {
-                                      return Text(
-                                        username == null
-                                            ? "Good Evening ,"
-                                            : "Good Evening ,$username",
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.titleMedium,
-                                      );
-                                    },
-                              ),
-                              Builder(
-                                builder: (context) {
-                                  return Text(
-                                    context
-                                                .read<HomeController>()
-                                                .motivationQuote ==
-                                            null
-                                        ? "One task at a time. One step closer."
-                                        : "${context.read().motivationQuote}",
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.titleSmall,
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "Yuhuu ,Your work Is",
-                        style: Theme.of(context).textTheme.displayLarge,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "almost done !",
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
-                          SizedBox(width: 8),
-                          CustomSvgPicture.withoutColor(
-                            path: "assets/images/waving_hand.svg",
-                            width: 32,
-                            height: 32,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      AchievedTasksWidget(),
-                      const SizedBox(height: 8),
-                      HighPriorityTasksWidget(),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 24.0, bottom: 16),
-                        child: Text(
-                          "My Tasks",
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleMedium!.copyWith(fontSize: 20),
+                                Text(
+                                  controller.motivationQuote == null
+                                      ? "One task at a time. One step closer."
+                                      : controller.motivationQuote.toString(),
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        const Gap(20),
+                        Text(
+                          "Yuhuu ,Your work Is",
+                          style: Theme.of(context).textTheme.displayLarge,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "almost done !",
+                              style: Theme.of(context).textTheme.displayLarge,
+                            ),
+                            SizedBox(width: 8),
+                            CustomSvgPicture.withoutColor(
+                              path: "assets/images/waving_hand.svg",
+                              width: 32,
+                              height: 32,
+                            ),
+                          ],
+                        ),
+                        const Gap(16),
+                        AchievedTasksWidget(),
+                        const Gap(8),
+                        HighPriorityTasksWidget(),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 24.0, bottom: 16),
+                          child: Text(
+                            "My Tasks",
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleMedium!.copyWith(fontSize: 20),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SliverTaskListWidget(
-                emptyMessage:
-                    "The are no tasks yet... Clike + to add the first task ✍",
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: SizedBox(
-          height: 44,
-          child: Builder(
-            builder: (context) {
-              return FloatingActionButton.extended(
-                onPressed: () async {
-                  final bool? result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddTask()),
-                  );
-                  print("===========================$result");
-                  if (result != null && result) {
-                    context.read<HomeController>().loadTask();
-                  }
-                },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                SliverTaskListWidget(
+                  emptyMessage:
+                      "The are no tasks yet... Clike + to add the first task ✍",
                 ),
-                icon: Icon(Icons.add),
-                label: Text("Add New Task"),
-              );
-            },
+              ],
+            ),
           ),
-        ),
-      ),
+          floatingActionButton: SizedBox(
+            height: 44,
+            child: Builder(
+              builder: (context) {
+                return FloatingActionButton.extended(
+                  onPressed: () async {
+                    final bool? result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddTask()),
+                    );
+                    if (result != null && result) {
+                      context.read<TasksController>().init();
+                    }
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  icon: Icon(Icons.add),
+                  label: Text("Add New Task"),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

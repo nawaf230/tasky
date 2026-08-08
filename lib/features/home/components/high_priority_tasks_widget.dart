@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
-import 'package:tasky/core/widget/custom_check_box.dart';
-import 'package:tasky/core/widget/custom_svg_picture.dart';
-import 'package:tasky/features/home/home_controller.dart';
+import 'package:tasky/core/widgets/custom_check_box.dart';
+import 'package:tasky/core/widgets/custom_svg_picture.dart';
+import 'package:tasky/features/tasks/controllers/tasks_controller.dart';
 import 'package:tasky/features/tasks/high_priority_screen.dart';
 
 class HighPriorityTasksWidget extends StatelessWidget {
@@ -11,8 +12,8 @@ class HighPriorityTasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (BuildContext context, HomeController controller, Widget? child) {
+    return Consumer<TasksController>(
+      builder: (BuildContext context, TasksController controller, Widget? child) {
         final tasksList = controller.tasks;
         return Container(
           width: double.infinity,
@@ -46,7 +47,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const Gap(8),
                       ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -72,7 +73,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
                                   final index = tasksList.indexWhere(
                                     (element) => element.id == task.id,
                                   );
-                                  controller.doneTask(value, index);
+                                  controller.doneHighPriorityTask(value, index);
                                 },
                               ),
                               Expanded(
@@ -102,7 +103,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
                       builder: (context) => HighPriorityScreen(),
                     ),
                   );
-                  controller.loadTask();
+                  controller.init();
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(

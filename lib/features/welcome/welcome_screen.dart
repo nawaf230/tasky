@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/services/preferences_manager.dart';
-import 'package:tasky/core/widget/custom_svg_picture.dart';
-import 'package:tasky/core/widget/custom_text_form_field.dart';
+import 'package:tasky/core/widgets/custom_svg_picture.dart';
+import 'package:tasky/core/widgets/custom_text_form_field.dart';
 import 'package:tasky/features/Navigation/main_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -21,21 +22,21 @@ class WelcomeScreen extends StatelessWidget {
               key: _key,
               child: Column(
                 children: [
-                  const SizedBox(height: 16),
+                  const Gap(16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomSvgPicture.withoutColor(
                         path: "assets/images/logo.svg",
                       ),
-                      SizedBox(width: 16),
+                      const Gap(16),
                       Text(
                         "Tasky",
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
                     ],
                   ),
-                  const SizedBox(height: 108),
+                  const Gap(108),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -50,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const Gap(8),
                   Text(
                     "Your productivity journey starts here.",
 
@@ -58,7 +59,7 @@ class WelcomeScreen extends StatelessWidget {
                       context,
                     ).textTheme.displaySmall!.copyWith(fontSize: 16),
                   ),
-                  const SizedBox(height: 24),
+                  const Gap(24),
                   CustomSvgPicture.withoutColor(
                     path: "assets/images/pana.svg",
                     width: 216,
@@ -70,8 +71,8 @@ class WelcomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 28),
-                        const SizedBox(height: 8),
+                        const Gap(28),
+                        const Gap(8),
                         CustomTextFormField(
                           controller: _nameController,
                           validator: (String? value) {
@@ -84,7 +85,7 @@ class WelcomeScreen extends StatelessWidget {
                           hintText: "e.g. Sarah Khalid",
                           maxLines: 1,
                         ),
-                        const SizedBox(height: 24),
+                        const Gap(24),
                         ElevatedButton(
                           onPressed: () async {
                             if (_key.currentState?.validate() ?? false) {

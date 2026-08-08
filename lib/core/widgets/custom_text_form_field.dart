@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -19,7 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(
           title,
@@ -27,7 +28,7 @@ class CustomTextFormField extends StatelessWidget {
             context,
           ).textTheme.displaySmall!.copyWith(fontSize: 16),
         ),
-        SizedBox(height: 8),
+        const Gap(8),
         TextFormField(
           validator: validator,
           controller: controller,

@@ -4,7 +4,7 @@ import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/features/tasks/completed_tasks_screen.dart';
 import 'package:tasky/features/home/home_screen.dart';
 import 'package:tasky/features/profile/profile_screen.dart';
-import 'package:tasky/features/tasks/tasks_screen.dart';
+import 'package:tasky/features/tasks/todo_tasks_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -16,7 +16,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
-    TasksScreen(),
+    TodoTasksScreen(),
     CompletedTasksScreen(),
     ProfileScreen(),
   ];

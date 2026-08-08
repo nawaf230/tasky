@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/services/preferences_manager.dart';
-import 'package:tasky/core/widget/custom_text_form_field.dart';
+import 'package:tasky/core/widgets/custom_text_form_field.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   UserDetailsScreen({
@@ -64,7 +65,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   },
                   maxLines: 1,
                 ),
-                const SizedBox(height: 20),
+                const Gap(20),
                 CustomTextFormField(
                   title: "Motivation Quote",
                   controller: _motivationController,
@@ -87,7 +88,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         _userName,
                       );
                       await PreferencesManager().setString(
-                        "motivation_quote",
+                        StorageKey.motivationQuote,
                         _motivationQuote,
                       );
                       Navigator.of(context).pop(true);

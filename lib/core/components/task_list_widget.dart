@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:tasky/models/task_model.dart';
 import 'package:tasky/core/components/task_item_widget.dart';
 
@@ -37,7 +38,7 @@ class TaskListWidget extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 65),
             itemCount: tasks.length,
             separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(height: 8);
+              return const Gap(8);
             },
             itemBuilder: (BuildContext context, int index) {
               return TaskItemWidget(
