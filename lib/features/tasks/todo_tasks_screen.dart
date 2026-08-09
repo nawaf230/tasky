@@ -28,12 +28,15 @@ class TodoTasksScreen extends StatelessWidget {
                     child: CircularProgressIndicator(color: Color(0xFFFFFCFC)),
                   )
                 : Consumer<TasksController>(
-                    builder: (context, TasksController value, child) {
+                    builder: (context, TasksController controller, child) {
                       return TaskListWidget(
                         tasks: controller.todoTasks,
                         emptyMessage: "Finshed all tasks",
                         onTap: (bool? value, int index) async {
-                          controller.doneTodoTask(value, index);
+                          controller.doneTask(
+                            value,
+                            controller.todoTasks[index].id,
+                          );
                         },
                         onDelete: (id) {
                           controller.deleteTask(id);

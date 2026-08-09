@@ -73,7 +73,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
                                   final index = tasksList.indexWhere(
                                     (element) => element.id == task.id,
                                   );
-                                  controller.doneHighPriorityTask(value, index);
+                                  controller.doneTask(value, task.id);
                                 },
                               ),
                               Expanded(
