@@ -57,7 +57,7 @@ class TasksController extends ChangeNotifier {
       jsonEncode(updatetTask),
     );
 
-    init();
+    notifyListeners();
   }
 
   void deleteTask(int? id) async {
