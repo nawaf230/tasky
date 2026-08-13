@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:tasky/core/constants/storage_key.dart';
-import 'package:tasky/core/services/preferences_manager.dart';
+import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/core/widgets/custom_text_form_field.dart';
 
 class UserDetailsScreen extends StatefulWidget {

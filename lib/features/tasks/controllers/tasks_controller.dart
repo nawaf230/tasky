@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:tasky/core/constants/storage_key.dart';
-import 'package:tasky/core/services/preferences_manager.dart';
+import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/models/task_model.dart';
 
 class TasksController extends ChangeNotifier {

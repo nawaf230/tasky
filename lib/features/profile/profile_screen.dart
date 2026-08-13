@@ -6,7 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tasky/core/constants/storage_key.dart';
-import 'package:tasky/core/services/preferences_manager.dart';
+import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custom_svg_picture.dart';
 import 'package:tasky/features/profile/user_details_screen.dart';
