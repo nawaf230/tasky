@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/models/task_model.dart';
 import 'package:tasky/core/components/task_item_widget.dart';
 
@@ -14,6 +14,7 @@ class TaskListWidget extends StatelessWidget {
   });
 
   final List<TaskModel> tasks;
+
   // Call Blak Function
   final void Function(bool?, int) onTap;
   final void Function(int?) onDelete;
@@ -38,7 +39,7 @@ class TaskListWidget extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 65),
             itemCount: tasks.length,
             separatorBuilder: (BuildContext context, int index) {
-              return const Gap(8);
+              return SizedBox(height: AppSizes.h8);
             },
             itemBuilder: (BuildContext context, int index) {
               return TaskItemWidget(

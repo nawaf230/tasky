@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/enums/task_item_action_enum.dart';
 import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
@@ -9,6 +9,7 @@ import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custom_check_box.dart';
 import 'package:tasky/core/widgets/custom_text_form_field.dart';
 import 'package:tasky/models/task_model.dart';
+
 
 class TaskItemWidget extends StatelessWidget {
   TaskItemWidget({
@@ -18,10 +19,13 @@ class TaskItemWidget extends StatelessWidget {
     required this.onDelete,
     required this.onEdit,
   });
+
   final TaskModel model;
+
   // Call Blak Function
   final void Function(bool?) onChanged;
-  // I seand the index in this Function
+
+  // I send the index in this Function
   final void Function(int?) onDelete;
   final void Function() onEdit;
   final _key = GlobalKey<FormState>();
@@ -30,11 +34,11 @@ class TaskItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 56,
+      height: AppSizes.h56,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppSizes.r20),
         border: Border.all(
           color: ThemeController.isDark()
               ? Colors.transparent
@@ -43,12 +47,12 @@ class TaskItemWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Gap(8),
+          SizedBox(width: AppSizes.w8),
           CustomCheckBox(
             value: model.isDone,
             onChanged: (bool? value) => onChanged(value),
           ),
-          const Gap(8),
+          SizedBox(width: AppSizes.w8),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +76,7 @@ class TaskItemWidget extends StatelessWidget {
             ),
           ),
           PopupMenuButton<TaskItemActionEnum>(
-            padding: EdgeInsets.all(3),
+            padding: EdgeInsets.all(AppSizes.w3),
             icon: Icon(Icons.more_vert),
             iconColor: !ThemeController.isDark()
                 ? model.isDone
@@ -98,7 +102,7 @@ class TaskItemWidget extends StatelessWidget {
               }
             },
             itemBuilder: (context) => [
-              // this is Spared opareter
+              // This is Spread operator.
               ...TaskItemActionEnum.values.map(
                 (e) => PopupMenuItem(value: e, child: Text(e.name)),
               ),
@@ -159,14 +163,14 @@ class TaskItemWidget extends StatelessWidget {
     );
   }
 
-  Future<bool?> _showBottomSheet(BuildContext context, TaskModel modle) {
+  Future<bool?> _showBottomSheet(BuildContext context, TaskModel model) {
     final TextEditingController taskNameController = TextEditingController(
-      text: modle.taskName,
+      text: model.taskName,
     );
     final TextEditingController taskDescriptionController =
-        TextEditingController(text: modle.taskDescription);
+        TextEditingController(text: model.taskDescription);
     final key = GlobalKey<FormState>();
-    bool isHighPriority = modle.isHighPriority;
+    bool isHighPriority = model.isHighPriority;
     return showModalBottomSheet<bool>(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       context: context,
@@ -177,9 +181,9 @@ class TaskItemWidget extends StatelessWidget {
           builder: (context, setState) {
             return Padding(
               padding: EdgeInsets.only(
-                left: 16,
-                right: 16,
-                top: 8,
+                left: AppSizes.w16,
+                right: AppSizes.w16,
+                top: AppSizes.h8,
                 bottom: MediaQuery.of(context).viewInsets.bottom + 8,
               ),
               child: SafeArea(
@@ -189,7 +193,7 @@ class TaskItemWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Gap(20),
+                      SizedBox(height: AppSizes.h20),
                       CustomTextFormField(
                         title: "Task Name",
                         controller: taskNameController,
@@ -202,7 +206,7 @@ class TaskItemWidget extends StatelessWidget {
                         },
                         maxLines: 1,
                       ),
-                      const Gap(20),
+                      SizedBox(height: AppSizes.h20),
                       CustomTextFormField(
                         title: "Task Description",
                         controller: taskDescriptionController,
@@ -210,7 +214,7 @@ class TaskItemWidget extends StatelessWidget {
                             "Finish onboarding UI and hand off to devs by Thursday.",
                         maxLines: 5,
                       ),
-                      const Gap(20),
+                      SizedBox(height: AppSizes.h20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -228,14 +232,8 @@ class TaskItemWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Gap(25),
+                      SizedBox(height: AppSizes.h25),
                       ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          fixedSize: Size(
-                            MediaQuery.of(context).size.width,
-                            40,
-                          ),
-                        ),
                         onPressed: () async {
                           if (key.currentState?.validate() ?? false) {
                             final String? taskJson = PreferencesManager()
@@ -246,19 +244,19 @@ class TaskItemWidget extends StatelessWidget {
                               listTasks = jsonDecode(taskJson) as List<dynamic>;
                             }
                             // The model after edit.
-                            final TaskModel newModle = TaskModel(
-                              id: modle.id,
+                            final TaskModel newModel = TaskModel(
+                              id: model.id,
                               taskName: taskNameController.text,
                               taskDescription: taskDescriptionController.text,
                               isHighPriority: isHighPriority,
-                              isDone: modle.isDone,
+                              isDone: model.isDone,
                             );
 
                             final item = listTasks.firstWhere(
-                              (element) => element["id"] == modle.id,
+                              (element) => element["id"] == model.id,
                             );
                             final index = listTasks.indexOf(item);
-                            listTasks[index] = newModle;
+                            listTasks[index] = newModel;
 
                             //  convert to json
 
@@ -274,7 +272,7 @@ class TaskItemWidget extends StatelessWidget {
                         label: Text(
                           "Edit Task",
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize:AppSizes.sp14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

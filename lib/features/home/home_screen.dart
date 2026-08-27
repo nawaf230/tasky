@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/core/widgets/custom_svg_picture.dart';
 import 'package:tasky/features/home/controllers/home_controller.dart';
 import 'package:tasky/features/add_task/add_task_screen.dart';
@@ -22,12 +22,12 @@ class HomeScreen extends StatelessWidget {
         final controller = context.read<HomeController>();
         return Scaffold(
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.w16),
             child: CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
+                    padding: EdgeInsets.only(top: AppSizes.h16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                                   controller.userImagePath,
                               builder: (context, String? userImage, child) {
                                 return CircleAvatar(
-                                  radius: 22,
+                                  radius: AppSizes.r22,
                                   backgroundColor: Colors.transparent,
                                   backgroundImage: userImage != null
                                       ? FileImage(File(userImage))
@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                            const Gap(8),
+                            SizedBox(width: AppSizes.w8),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -92,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const Gap(20),
+                        SizedBox(height: AppSizes.h20),
                         Text(
                           "Yuhuu ,Your work Is",
                           style: Theme.of(context).textTheme.displayLarge,
@@ -103,25 +103,27 @@ class HomeScreen extends StatelessWidget {
                               "almost done !",
                               style: Theme.of(context).textTheme.displayLarge,
                             ),
-                            SizedBox(width: 8),
+                            SizedBox(width: AppSizes.w8),
                             CustomSvgPicture.withoutColor(
                               path: "assets/images/waving_hand.svg",
-                              width: 32,
-                              height: 32,
+                              width: AppSizes.w28,
+                              height: AppSizes.h28,
                             ),
                           ],
                         ),
-                        const Gap(16),
+                        SizedBox(height: AppSizes.h16),
                         AchievedTasksWidget(),
-                        const Gap(8),
+                        SizedBox(height: AppSizes.h8),
                         HighPriorityTasksWidget(),
                         Padding(
-                          padding: const EdgeInsets.only(top: 24.0, bottom: 16),
+                          padding: EdgeInsets.only(
+                            top: AppSizes.h24,
+                            bottom: AppSizes.h16,
+                          ),
                           child: Text(
                             "My Tasks",
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium!.copyWith(fontSize: 20),
+                            style: Theme.of(context).textTheme.titleMedium!
+                                .copyWith(fontSize: AppSizes.sp20),
                           ),
                         ),
                       ],
@@ -136,7 +138,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           floatingActionButton: SizedBox(
-            height: 44,
+            height: AppSizes.h44,
             child: Builder(
               builder: (context) {
                 return FloatingActionButton.extended(
@@ -146,11 +148,13 @@ class HomeScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => AddTask()),
                     );
                     if (result != null && result) {
+                      if (!context.mounted) return;
+
                       context.read<TasksController>().init();
                     }
                   },
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(AppSizes.r30),
                   ),
                   icon: Icon(Icons.add),
                   label: Text("Add New Task"),

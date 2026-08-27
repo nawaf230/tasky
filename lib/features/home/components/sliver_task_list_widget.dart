@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/core/components/task_item_widget.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/features/tasks/controllers/tasks_controller.dart';
 
 class SliverTaskListWidget extends StatelessWidget {
   const SliverTaskListWidget({super.key, this.emptyMessage});
+
   // Call Blak Function
 
   final String? emptyMessage;
@@ -29,7 +30,7 @@ class SliverTaskListWidget extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Padding(
-                        padding: const EdgeInsets.all(5.0),
+                        padding: EdgeInsets.all(AppSizes.w5),
                         child: Text(
                           emptyMessage ?? "No Tasks Found",
                           style: Theme.of(context).textTheme.titleMedium,
@@ -39,11 +40,11 @@ class SliverTaskListWidget extends StatelessWidget {
                     ),
                   )
                 : SliverPadding(
-                    padding: EdgeInsets.only(bottom: 80),
+                    padding: EdgeInsets.only(bottom: AppSizes.h80),
                     sliver: SliverList.separated(
                       itemCount: tasks.length,
                       separatorBuilder: (BuildContext context, int index) {
-                        return const Gap(8);
+                        return SizedBox(height: AppSizes.h8,);
                       },
                       itemBuilder: (BuildContext context, int index) {
                         return TaskItemWidget(

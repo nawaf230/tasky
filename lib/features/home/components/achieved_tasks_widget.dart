@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/features/tasks/controllers/tasks_controller.dart';
 
@@ -13,12 +13,13 @@ class AchievedTasksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TasksController>(
       builder: (BuildContext context, TasksController controller, Widget? child) {
+        controller.init();
         return Container(
           width: double.infinity,
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(AppSizes.w16),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primaryContainer,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(AppSizes.r20),
             border: Border.all(
               color: ThemeController.isDark()
                   ? Colors.transparent
@@ -35,7 +36,8 @@ class AchievedTasksWidget extends StatelessWidget {
                     "Achieved Tasks",
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const Gap(4),
+
+                  SizedBox(height: AppSizes.h4),
                   Text(
                     "${controller.totalDoneTasks} Out of ${controller.totalTasks} Done",
                     style: Theme.of(context).textTheme.titleSmall,
@@ -48,8 +50,8 @@ class AchievedTasksWidget extends StatelessWidget {
                   Transform.rotate(
                     angle: -pi / 2,
                     child: SizedBox(
-                      height: 48,
-                      width: 48,
+                      height: AppSizes.h48,
+                      width: AppSizes.w48,
                       child: CircularProgressIndicator(
                         value: controller.percent,
                         backgroundColor: const Color(0xFF6D6D6D),

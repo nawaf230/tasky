@@ -23,7 +23,7 @@ class AddTaskController extends ChangeNotifier {
         listTasks = jsonDecode(taskJson) as List<dynamic>;
       }
       // model
-      final TaskModel modle = TaskModel(
+      final TaskModel model = TaskModel(
         id: listTasks.length + 1,
         taskName: taskNameController.text,
         taskDescription: taskDescriptionController.text,
@@ -31,7 +31,7 @@ class AddTaskController extends ChangeNotifier {
       );
       //  convert to json
 
-      listTasks.add(modle.toJson());
+      listTasks.add(model.toJson());
       final taskEncode = jsonEncode(listTasks);
       // print("================List Tasks : $listTasks");
       await PreferencesManager().setString(StorageKey.tasks, taskEncode);

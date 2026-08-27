@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/core/widgets/custom_text_form_field.dart';
 import 'package:tasky/features/add_task/controllers/add_task_controller.dart';
 
@@ -19,7 +19,10 @@ class AddTask extends StatelessWidget {
             child: Form(
               key: controller.key,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppSizes.w16,
+                  vertical: AppSizes.h8,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +39,7 @@ class AddTask extends StatelessWidget {
                       },
                       maxLines: 1,
                     ),
-                    const Gap(20),
+                    SizedBox(height: AppSizes.h20),
                     CustomTextFormField(
                       title: "Task Description",
                       controller: controller.taskDescriptionController,
@@ -44,7 +47,7 @@ class AddTask extends StatelessWidget {
                           "Finish onboarding UI and hand off to devs by Thursday.",
                       maxLines: 5,
                     ),
-                    const Gap(20),
+                    SizedBox(height: AppSizes.h20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -66,9 +69,6 @@ class AddTask extends StatelessWidget {
                     ),
                     Spacer(),
                     ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(MediaQuery.of(context).size.width, 40),
-                      ),
                       onPressed: () async {
                         controller.addTask(context);
                       },
@@ -76,7 +76,7 @@ class AddTask extends StatelessWidget {
                       label: Text(
                         "Add Task",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: AppSizes.sp14,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

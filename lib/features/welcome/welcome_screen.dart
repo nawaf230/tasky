@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/core/widgets/custom_svg_picture.dart';
@@ -22,21 +22,23 @@ class WelcomeScreen extends StatelessWidget {
               key: _key,
               child: Column(
                 children: [
-                  const Gap(16),
+                  SizedBox(height: AppSizes.h16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomSvgPicture.withoutColor(
                         path: "assets/images/logo.svg",
+                        height: AppSizes.h42,
+                        width: AppSizes.w42,
                       ),
-                      const Gap(16),
+                      SizedBox(width: AppSizes.h16),
                       Text(
                         "Tasky",
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
                     ],
                   ),
-                  const Gap(108),
+                  SizedBox(height: AppSizes.h118),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -46,33 +48,33 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                       CustomSvgPicture.withoutColor(
                         path: "assets/images/waving_hand.svg",
-                        height: 28,
-                        width: 28,
+                        height: AppSizes.h28,
+                        width: AppSizes.w28,
                       ),
                     ],
                   ),
-                  const Gap(8),
+                  SizedBox(height: AppSizes.h8),
                   Text(
                     "Your productivity journey starts here.",
 
                     style: Theme.of(
                       context,
-                    ).textTheme.displaySmall!.copyWith(fontSize: 16),
+                    ).textTheme.displaySmall!.copyWith(fontSize: AppSizes.sp16),
                   ),
-                  const Gap(24),
+                  SizedBox(height: AppSizes.h24),
                   CustomSvgPicture.withoutColor(
                     path: "assets/images/pana.svg",
-                    width: 216,
-                    height: 204,
+                    width: AppSizes.w216,
+                    height: AppSizes.h200,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(horizontal: AppSizes.w16),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Gap(28),
-                        const Gap(8),
+                        SizedBox(height: AppSizes.h28),
+
                         CustomTextFormField(
                           controller: _nameController,
                           validator: (String? value) {
@@ -85,7 +87,8 @@ class WelcomeScreen extends StatelessWidget {
                           hintText: "e.g. Sarah Khalid",
                           maxLines: 1,
                         ),
-                        const Gap(24),
+                        SizedBox(height: AppSizes.h24),
+
                         ElevatedButton(
                           onPressed: () async {
                             if (_key.currentState?.validate() ?? false) {
@@ -93,6 +96,9 @@ class WelcomeScreen extends StatelessWidget {
                                 StorageKey.username,
                                 _nameController.text,
                               );
+
+                              if (!context.mounted) return;
+
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -105,12 +111,7 @@ class WelcomeScreen extends StatelessWidget {
                               );
                             }
                           },
-                          style: ElevatedButton.styleFrom(
-                            fixedSize: Size(
-                              MediaQuery.of(context).size.width,
-                              40,
-                            ),
-                          ),
+
                           child: Text("Let’s Get Started"),
                         ),
                       ],

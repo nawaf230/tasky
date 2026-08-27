@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/core/widgets/custom_text_form_field.dart';
@@ -48,10 +48,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
         child: Form(
           key: _key,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.w16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: AppSizes.h8),
                 CustomTextFormField(
                   title: "User Name",
                   controller: _userNameController,
@@ -65,7 +66,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   },
                   maxLines: 1,
                 ),
-                const Gap(20),
+                SizedBox(height: AppSizes.h20),
                 CustomTextFormField(
                   title: "Motivation Quote",
                   controller: _motivationController,
@@ -91,17 +92,21 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         StorageKey.motivationQuote,
                         _motivationQuote,
                       );
+                      if (!context.mounted) return;
+
                       Navigator.of(context).pop(true);
                     }
                   },
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(MediaQuery.of(context).size.width, 40),
-                  ),
+
                   child: Text(
                     "Save Changes",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontSize: AppSizes.sp14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
+                SizedBox(height: AppSizes.h16),
               ],
             ),
           ),

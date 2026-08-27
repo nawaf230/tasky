@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custom_check_box.dart';
 import 'package:tasky/core/widgets/custom_svg_picture.dart';
@@ -19,7 +19,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primaryContainer,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(AppSizes.r20),
             border: Border.all(
               color: ThemeController.isDark()
                   ? Colors.transparent
@@ -32,22 +32,23 @@ class HighPriorityTasksWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(AppSizes.w8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: EdgeInsets.symmetric(horizontal: AppSizes.w8),
                         child: Text(
                           "High Priority Tasks",
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: AppSizes.sp14,
                             fontWeight: FontWeight.w400,
                             color: Color(0xFF15B86C),
                           ),
                         ),
                       ),
-                      const Gap(8),
+
+                      SizedBox(height: AppSizes.h8),
                       ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -106,17 +107,17 @@ class HighPriorityTasksWidget extends StatelessWidget {
                   controller.init();
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 12,
+                  padding: EdgeInsets.symmetric(
+                    vertical: AppSizes.h16,
+                    horizontal: AppSizes.w12,
                   ),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       Container(
                         alignment: Alignment.bottomRight,
-                        width: 40,
-                        height: 40,
+                        width: AppSizes.w40,
+                        height: AppSizes.h40,
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primaryContainer,
                           shape: BoxShape.circle,
@@ -132,8 +133,8 @@ class HighPriorityTasksWidget extends StatelessWidget {
                         colorFilter: ThemeController.isDark()
                             ? Color(0xFFC6C6C6)
                             : Color(0xFF3A4640),
-                        width: 24,
-                        height: 24,
+                        width: AppSizes.w24,
+                        height: AppSizes.h24,
                       ),
                     ],
                   ),

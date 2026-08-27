@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
@@ -32,15 +33,21 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, ThemeMode themeMode, Widget? child) {
         return ChangeNotifierProvider<TasksController>(
           create: (_) => TasksController()..init(),
-          child: MaterialApp(
-            title: 'Tasky',
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            themeMode: themeMode,
-            debugShowCheckedModeBanner: false,
-            home: SafeArea(
-              child: _username == null ? WelcomeScreen() : MainScreen(),
-            ),
+          child: ScreenUtilInit(
+            designSize: const Size(375, 809),
+            minTextAdapt: true,
+            builder: (ctx, _) {
+              return MaterialApp(
+                title: 'Tasky',
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                themeMode: themeMode,
+                debugShowCheckedModeBanner: false,
+                home: SafeArea(
+                  child: _username == null ? WelcomeScreen() : MainScreen(),
+                ),
+              );
+            },
           ),
         );
       },

@@ -37,6 +37,15 @@ class TasksController extends ChangeNotifier {
 
       _loadData();
       _calculatePercent();
+    } else {
+      tasks = [];
+      completeTasks = [];
+      highPriorityTasks = [];
+      todoTasks = [];
+
+      totalTasks = 0;
+      totalDoneTasks = 0;
+      percent = 0;
     }
 
     isLoading = false;
@@ -57,7 +66,7 @@ class TasksController extends ChangeNotifier {
       jsonEncode(updatetTask),
     );
 
-    notifyListeners(); 
+    notifyListeners();
   }
 
   void deleteTask(int? id) async {

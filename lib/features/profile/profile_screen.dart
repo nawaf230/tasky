@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/core/constants/storage_key.dart';
 import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String _username;
   String? _motivationQuote;
   String? userImagePath;
-  bool isLoding = true;
+  bool isLoading = true;
 
   void _loadData() async {
     setState(() {
@@ -32,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           PreferencesManager().getString(StorageKey.motivationQuote) ??
           "One task at a time. One step closer.";
       userImagePath = PreferencesManager().getString(StorageKey.userImage);
-      isLoding = false;
+      isLoading = false;
     });
   }
 
@@ -45,15 +45,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // hint the bice code in method build not working if else isLoading is false.
   @override
   Widget build(BuildContext context) {
-    return isLoding
+    return isLoading
         ? Center(child: CircularProgressIndicator(color: Color(0xFFFFFCFC)))
         : Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(AppSizes.w16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.w2),
                   child: Center(
                     child: Text(
                       "My Profile",
@@ -61,12 +61,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                const Gap(18),
+                SizedBox(height: AppSizes.h18),
 
                 Center(
                   child: Column(
                     children: [
-                      const Gap(8),
+                      SizedBox(height: AppSizes.h8),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(100)),
@@ -80,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           alignment: Alignment.bottomRight,
                           children: [
                             CircleAvatar(
-                              radius: 50,
+                              radius: AppSizes.r43,
                               backgroundColor: Colors.transparent,
                               backgroundImage: userImagePath != null
                                   ? FileImage(File(userImagePath!))
@@ -89,6 +89,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ? ClipOval(
                                       child: CustomSvgPicture.withoutColor(
                                         path: "assets/images/person.svg",
+                                        height: AppSizes.h85,
+                                        width: AppSizes.w85,
                                       ),
                                     )
                                   : null,
@@ -103,13 +105,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 });
                               },
                               child: Container(
-                                width: 38,
-                                height: 38,
+                                width: AppSizes.w34,
+                                height: AppSizes.h34,
                                 decoration: BoxDecoration(
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.primaryContainer,
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(
+                                    AppSizes.r100,
+                                  ),
                                   border: Border.all(
                                     color: ThemeController.isDark()
                                         ? Colors.transparent
@@ -117,21 +121,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 child: Icon(
+                                  size: AppSizes.r26,
                                   Icons.camera_alt_outlined,
-                                  weight: 15,
+                                  // weight: AppSizes.w15,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const Gap(8),
+                      SizedBox(height: AppSizes.h8),
                       Text(
                         _username,
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
-                      const Gap(4),
 
+                      SizedBox(height: AppSizes.h4),
                       Text(
                         _motivationQuote == null
                             ? "One task at a time. One step closer."
@@ -141,12 +146,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-                const Gap(24),
+                SizedBox(height: AppSizes.h24),
                 Text(
                   "Profile Info",
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
-                const Gap(20),
+                SizedBox(height: AppSizes.h20),
                 ListTile(
                   onTap: () async {
                     bool? result = await Navigator.push(
@@ -211,7 +216,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       StorageKey.motivationQuote,
                     );
                     await PreferencesManager().remove(StorageKey.tasks);
-
+                    if (!context.mounted) return;
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => WelcomeScreen()),
                       (Route<dynamic> route) => false,
@@ -248,7 +253,7 @@ void showImageSourceDialog(BuildContext context, Function(XFile) selectedFile) {
     builder: (context) {
       return SimpleDialog(
         title: Text(
-          "Chooes Image Source",
+          "choose Image Source",
           style: Theme.of(context).textTheme.titleMedium,
         ),
         children: [
@@ -263,7 +268,11 @@ void showImageSourceDialog(BuildContext context, Function(XFile) selectedFile) {
               }
             },
             child: Row(
-              children: [Icon(Icons.camera_alt), const Gap(8), Text("Camera")],
+              children: [
+                Icon(Icons.camera_alt),
+                SizedBox(width: AppSizes.w8),
+                Text("Camera"),
+              ],
             ),
           ),
           SimpleDialogOption(
@@ -279,7 +288,7 @@ void showImageSourceDialog(BuildContext context, Function(XFile) selectedFile) {
             child: Row(
               children: [
                 Icon(Icons.photo_library_outlined),
-                const Gap(8),
+                SizedBox(width: AppSizes.w8),
                 Text("Gallery"),
               ],
             ),

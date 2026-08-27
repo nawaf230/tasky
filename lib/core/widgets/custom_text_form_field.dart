@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:tasky/core/constants/app_sizes.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -12,11 +12,13 @@ class CustomTextFormField extends StatelessWidget {
   });
 
   final TextEditingController controller;
+
   // call back Function.
   final String? Function(String?)? validator;
   final int? maxLines;
   final String hintText;
   final String title;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,9 +28,9 @@ class CustomTextFormField extends StatelessWidget {
           title,
           style: Theme.of(
             context,
-          ).textTheme.displaySmall!.copyWith(fontSize: 16),
+          ).textTheme.displaySmall!.copyWith(fontSize: AppSizes.sp16),
         ),
-        const Gap(8),
+        SizedBox(height: AppSizes.h8),
         TextFormField(
           validator: validator,
           controller: controller,
