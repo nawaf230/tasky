@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/core/constants/storage_key.dart';
+import 'package:tasky/core/datasource/local_data/file_storage_manager.dart';
 import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/core/theme/dark_theme.dart';
 import 'package:tasky/core/theme/light_theme.dart';
@@ -13,9 +14,10 @@ import 'package:tasky/features/welcome/welcome_screen.dart';
 // Default value of Theme
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await ScreenUtil.ensureScreenSize();
   await PreferencesManager().init();
   ThemeController().init();
+  await FileStorageManager().init();
   String? username = PreferencesManager().getString(StorageKey.username);
   runApp(MyApp(username: username));
 }

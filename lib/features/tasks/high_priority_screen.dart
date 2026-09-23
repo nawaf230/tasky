@@ -34,8 +34,8 @@ class HighPriorityScreen extends StatelessWidget {
                       onDelete: (id) {
                         controller.deleteTask(id);
                       },
-                      onEdit: () {
-                        controller.init();
+                      onEdit: () async{
+                       await controller.init();
                       },
                     );
                   },

@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:tasky/core/constants/app_sizes.dart';
-import 'package:tasky/core/constants/storage_key.dart';
+import 'package:tasky/core/datasource/local_data/file_storage_manager.dart';
 import 'package:tasky/core/enums/task_item_action_enum.dart';
-import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custom_check_box.dart';
 import 'package:tasky/core/widgets/custom_text_form_field.dart';
 import 'package:tasky/models/task_model.dart';
-
 
 class TaskItemWidget extends StatelessWidget {
   TaskItemWidget({
@@ -176,7 +172,8 @@ class TaskItemWidget extends StatelessWidget {
       context: context,
       isDismissible: false,
       isScrollControlled: true,
-      builder: (context) {
+      // A new context.
+      builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (context, setState) {
             return Padding(
@@ -236,13 +233,9 @@ class TaskItemWidget extends StatelessWidget {
                       ElevatedButton.icon(
                         onPressed: () async {
                           if (key.currentState?.validate() ?? false) {
-                            final String? taskJson = PreferencesManager()
-                                .getString(StorageKey.tasks);
-                            //  List<Map<String ,dynamic>> || List of Json
-                            List<dynamic> listTasks = [];
-                            if (taskJson != null) {
-                              listTasks = jsonDecode(taskJson) as List<dynamic>;
-                            }
+                            List<dynamic> listTasks = await FileStorageManager()
+                                .loadTasks();
+
                             // The model after edit.
                             final TaskModel newModel = TaskModel(
                               id: model.id,
@@ -258,12 +251,7 @@ class TaskItemWidget extends StatelessWidget {
                             final index = listTasks.indexOf(item);
                             listTasks[index] = newModel;
 
-                            //  convert to json
-
-                            await PreferencesManager().setString(
-                              StorageKey.tasks,
-                              jsonEncode(listTasks),
-                            );
+                            await FileStorageManager().saveTasks(listTasks);
 
                             Navigator.of(context).pop(true);
                           }
@@ -272,7 +260,7 @@ class TaskItemWidget extends StatelessWidget {
                         label: Text(
                           "Edit Task",
                           style: TextStyle(
-                            fontSize:AppSizes.sp14,
+                            fontSize: AppSizes.sp14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

@@ -13,7 +13,6 @@ class AchievedTasksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TasksController>(
       builder: (BuildContext context, TasksController controller, Widget? child) {
-        controller.init();
         return Container(
           width: double.infinity,
           padding: EdgeInsets.all(AppSizes.w16),

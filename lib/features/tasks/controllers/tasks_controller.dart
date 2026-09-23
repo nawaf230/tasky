@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:tasky/core/constants/storage_key.dart';
-import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
+import 'package:tasky/core/datasource/local_data/file_storage_manager.dart';
 import 'package:tasky/models/task_model.dart';
 
 class TasksController extends ChangeNotifier {
@@ -17,36 +14,24 @@ class TasksController extends ChangeNotifier {
   int totalDoneTasks = 0;
   double percent = 0;
 
-  void init() {
-    _loadTasks();
+  TasksController() {
+    init();
   }
 
-  void _loadTasks() {
+  Future<void> init() async {
+    await _loadTasks();
+  }
+
+  Future<void> _loadTasks() async {
     isLoading = true;
+    // notifyListeners();
 
-    // After Decode the value type is List<Map<String, dynamic>>
-    final String? finalTask = PreferencesManager().getString(StorageKey.tasks);
+    final taskData = await FileStorageManager().loadTasks();
 
-    if (finalTask != null) {
-      final taskAfterDecode = jsonDecode(finalTask) as List<dynamic>;
-      // List<Map<String, dynamic>>
+    tasks = taskData.map((element) => TaskModel.formJson(element)).toList();
 
-      tasks = taskAfterDecode
-          .map((element) => TaskModel.formJson(element))
-          .toList();
-
-      _loadData();
-      _calculatePercent();
-    } else {
-      tasks = [];
-      completeTasks = [];
-      highPriorityTasks = [];
-      todoTasks = [];
-
-      totalTasks = 0;
-      totalDoneTasks = 0;
-      percent = 0;
-    }
+    _loadData();
+    _calculatePercent();
 
     isLoading = false;
     notifyListeners();
@@ -60,11 +45,9 @@ class TasksController extends ChangeNotifier {
     _loadData();
     _calculatePercent();
 
-    final updatetTask = tasks.map((e) => e.toJson()).toList();
-    await PreferencesManager().setString(
-      StorageKey.tasks,
-      jsonEncode(updatetTask),
-    );
+    final updateTask = tasks.map((e) => e.toJson()).toList();
+
+    await FileStorageManager().saveTasks(updateTask);
 
     notifyListeners();
   }
@@ -73,14 +56,14 @@ class TasksController extends ChangeNotifier {
     if (id == null) return;
 
     // Now tasks ready
-    // Here I remove the targte element.
+    // Here I remove the target element.
     tasks.removeWhere((element) => element.id == id);
 
     _loadData();
     _calculatePercent();
 
     final updatedTask = tasks.map((e) => e.toJson()).toList();
-    PreferencesManager().setString(StorageKey.tasks, jsonEncode(updatedTask));
+    await FileStorageManager().saveTasks(updatedTask);
 
     notifyListeners();
   }

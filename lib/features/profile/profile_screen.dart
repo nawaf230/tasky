@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:tasky/core/constants/app_sizes.dart';
 import 'package:tasky/core/constants/storage_key.dart';
+import 'package:tasky/core/datasource/local_data/file_storage_manager.dart';
 import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custom_svg_picture.dart';
 import 'package:tasky/features/profile/user_details_screen.dart';
+import 'package:tasky/features/tasks/controllers/tasks_controller.dart';
 import 'package:tasky/features/welcome/welcome_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -84,16 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               backgroundColor: Colors.transparent,
                               backgroundImage: userImagePath != null
                                   ? FileImage(File(userImagePath!))
-                                  : null,
-                              child: userImagePath == null
-                                  ? ClipOval(
-                                      child: CustomSvgPicture.withoutColor(
-                                        path: "assets/images/person.svg",
-                                        height: AppSizes.h85,
-                                        width: AppSizes.w85,
-                                      ),
-                                    )
-                                  : null,
+                                  : AssetImage('assets/images/person.png'),
                             ),
                             GestureDetector(
                               onTap: () async {
@@ -195,7 +189,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   trailing: ValueListenableBuilder(
                     valueListenable: ThemeController.themeNotifier,
-                    // this variable lisane Are changed or not than return the value changed in the value
+                    // this variable listen Are changed or not than return the value changed in the value
                     builder:
                         (BuildContext context, ThemeMode value, Widget? child) {
                           return Switch(
@@ -215,7 +209,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     await PreferencesManager().remove(
                       StorageKey.motivationQuote,
                     );
-                    await PreferencesManager().remove(StorageKey.tasks);
+                    await FileStorageManager().clear();
+                    await context.read<TasksController>().init();
                     if (!context.mounted) return;
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => WelcomeScreen()),

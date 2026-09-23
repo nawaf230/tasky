@@ -104,7 +104,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
                       builder: (context) => HighPriorityScreen(),
                     ),
                   );
-                  controller.init();
+                  await controller.init();
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(

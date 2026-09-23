@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:tasky/core/constants/storage_key.dart';
-import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
+import 'package:tasky/core/datasource/local_data/file_storage_manager.dart';
 import 'package:tasky/models/task_model.dart';
 
 class AddTaskController extends ChangeNotifier {
@@ -16,12 +13,8 @@ class AddTaskController extends ChangeNotifier {
 
   void addTask(BuildContext context) async {
     if (key.currentState?.validate() ?? false) {
-      final String? taskJson = PreferencesManager().getString(StorageKey.tasks);
+      List<dynamic> listTasks = await FileStorageManager().loadTasks();
 
-      List<dynamic> listTasks = [];
-      if (taskJson != null) {
-        listTasks = jsonDecode(taskJson) as List<dynamic>;
-      }
       // model
       final TaskModel model = TaskModel(
         id: listTasks.length + 1,
@@ -29,12 +22,11 @@ class AddTaskController extends ChangeNotifier {
         taskDescription: taskDescriptionController.text,
         isHighPriority: isHighPriority,
       );
-      //  convert to json
 
       listTasks.add(model.toJson());
-      final taskEncode = jsonEncode(listTasks);
-      // print("================List Tasks : $listTasks");
-      await PreferencesManager().setString(StorageKey.tasks, taskEncode);
+      await FileStorageManager().saveTasks(listTasks);
+
+      if (!context.mounted) return;
       Navigator.of(context).pop(true);
     }
   }

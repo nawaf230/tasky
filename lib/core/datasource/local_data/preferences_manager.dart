@@ -2,15 +2,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // in this class I use Singleton Design Patterns.
 class PreferencesManager {
-  static final PreferencesManager _instacne = PreferencesManager._internal();
+  static final PreferencesManager _instance = PreferencesManager._internal();
   late final SharedPreferences _preferences;
 
-  // Factory constructor to return the sungleton instacne.
-  // imp : The Impurtant part of factory constructor in this constructor can return instacne.
+  // Factory constructor to return the singleton instance.
+  // imp : The Important part of factory constructor in this constructor can return instance.
   factory PreferencesManager() {
-    return _instacne;
+    return _instance;
   }
-  // Named Constructor The object of create instace from this class.
+
+  // Named Constructor The object of create instance from this class.
   PreferencesManager._internal();
 
   // This init refers to the initialization.

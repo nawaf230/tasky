@@ -44,14 +44,8 @@ class HomeScreen extends StatelessWidget {
                                   backgroundColor: Colors.transparent,
                                   backgroundImage: userImage != null
                                       ? FileImage(File(userImage))
-                                      : null,
-                                  child: ClipOval(
-                                    child: userImage == null
-                                        ? CustomSvgPicture.withoutColor(
-                                            path: "assets/images/person.svg",
-                                          )
-                                        : null,
-                                  ),
+                                      : AssetImage('assets/images/person.png'),
+                                  
                                 );
                               },
                             ),
@@ -132,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SliverTaskListWidget(
                   emptyMessage:
-                      "The are no tasks yet... Clike + to add the first task ✍",
+                      "The are no tasks yet... Click + to add the first task ✍",
                 ),
               ],
             ),
@@ -150,7 +144,7 @@ class HomeScreen extends StatelessWidget {
                     if (result != null && result) {
                       if (!context.mounted) return;
 
-                      context.read<TasksController>().init();
+                      await context.read<TasksController>().init();
                     }
                   },
                   shape: RoundedRectangleBorder(

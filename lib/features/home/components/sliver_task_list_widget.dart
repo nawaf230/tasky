@@ -44,7 +44,7 @@ class SliverTaskListWidget extends StatelessWidget {
                     sliver: SliverList.separated(
                       itemCount: tasks.length,
                       separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(height: AppSizes.h8,);
+                        return SizedBox(height: AppSizes.h8);
                       },
                       itemBuilder: (BuildContext context, int index) {
                         return TaskItemWidget(
@@ -52,7 +52,7 @@ class SliverTaskListWidget extends StatelessWidget {
                           onChanged: (bool? value) =>
                               controller.doneTask(value, tasks[index].id),
                           onDelete: (int? id) => controller.deleteTask(id),
-                          onEdit: () => controller.init(),
+                          onEdit: () async => await controller.init(),
                         );
                       },
                     ),

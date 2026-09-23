@@ -23,7 +23,7 @@ class CompletedTasksScreen extends StatelessWidget {
         ),
         Expanded(
           child: Padding(
-            padding:  EdgeInsets.all(AppSizes.w16),
+            padding: EdgeInsets.all(AppSizes.w16),
             child: controller.isLoading
                 ? Center(
                     child: CircularProgressIndicator(color: Color(0xFFFFFCFC)),
@@ -41,8 +41,8 @@ class CompletedTasksScreen extends StatelessWidget {
                         onDelete: (id) {
                           controller.deleteTask(id);
                         },
-                        onEdit: () {
-                          controller.init();
+                        onEdit: () async {
+                          await controller.init();
                         },
                       );
                     },
