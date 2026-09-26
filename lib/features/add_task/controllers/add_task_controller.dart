@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/core/datasource/local_data/file_storage_manager.dart';
+import 'package:tasky/core/datasource/local_data/hive_storage_manager.dart';
 import 'package:tasky/models/task_model.dart';
 
 class AddTaskController extends ChangeNotifier {
@@ -13,7 +13,7 @@ class AddTaskController extends ChangeNotifier {
 
   void addTask(BuildContext context) async {
     if (key.currentState?.validate() ?? false) {
-      List<dynamic> listTasks = await FileStorageManager().loadTasks();
+      List<TaskModel> listTasks = HiveStorageManager().loadTasks();
 
       // model
       final TaskModel model = TaskModel(
@@ -23,8 +23,8 @@ class AddTaskController extends ChangeNotifier {
         isHighPriority: isHighPriority,
       );
 
-      listTasks.add(model.toJson());
-      await FileStorageManager().saveTasks(listTasks);
+      listTasks.add(model);
+      await HiveStorageManager().saveTasks(listTasks);
 
       if (!context.mounted) return;
       Navigator.of(context).pop(true);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/core/constants/storage_key.dart';
-import 'package:tasky/core/datasource/local_data/file_storage_manager.dart';
+import 'package:tasky/core/datasource/local_data/hive_storage_manager.dart';
 import 'package:tasky/core/datasource/local_data/preferences_manager.dart';
 import 'package:tasky/core/theme/dark_theme.dart';
 import 'package:tasky/core/theme/light_theme.dart';
@@ -17,7 +17,8 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await PreferencesManager().init();
   ThemeController().init();
-  await FileStorageManager().init();
+  await HiveStorageManager().init();
+
   String? username = PreferencesManager().getString(StorageKey.username);
   runApp(MyApp(username: username));
 }

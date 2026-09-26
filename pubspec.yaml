@@ -21,6 +21,9 @@ dependencies:
   path_provider: ^2.1.6
   provider: ^6.1.5+1
 #  gap: ^3.0.1
+  hive_ce_flutter: ^2.3.4
+
+
 
   flutter_screenutil: ^5.9.3
 
@@ -33,6 +36,8 @@ dev_dependencies:
 
 
   flutter_lints: ^6.0.0
+  build_runner: ^2.16.1
+  hive_ce_generator: ^1.11.3
 
 
 flutter:

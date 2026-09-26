@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/core/constants/app_sizes.dart';
-import 'package:tasky/core/datasource/local_data/file_storage_manager.dart';
+import 'package:tasky/core/datasource/local_data/hive_storage_manager.dart';
 import 'package:tasky/core/enums/task_item_action_enum.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custom_check_box.dart';
@@ -233,7 +233,7 @@ class TaskItemWidget extends StatelessWidget {
                       ElevatedButton.icon(
                         onPressed: () async {
                           if (key.currentState?.validate() ?? false) {
-                            List<dynamic> listTasks = await FileStorageManager()
+                            List<TaskModel> listTasks = HiveStorageManager()
                                 .loadTasks();
 
                             // The model after edit.
@@ -246,12 +246,12 @@ class TaskItemWidget extends StatelessWidget {
                             );
 
                             final item = listTasks.firstWhere(
-                              (element) => element["id"] == model.id,
+                              (element) => element.id == model.id,
                             );
                             final index = listTasks.indexOf(item);
                             listTasks[index] = newModel;
 
-                            await FileStorageManager().saveTasks(listTasks);
+                            await HiveStorageManager().saveTasks(listTasks);
 
                             Navigator.of(context).pop(true);
                           }

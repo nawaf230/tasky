@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/core/datasource/local_data/file_storage_manager.dart';
+import 'package:tasky/core/datasource/local_data/hive_storage_manager.dart';
 import 'package:tasky/models/task_model.dart';
 
 class TasksController extends ChangeNotifier {
@@ -26,9 +26,7 @@ class TasksController extends ChangeNotifier {
     isLoading = true;
     // notifyListeners();
 
-    final taskData = await FileStorageManager().loadTasks();
-
-    tasks = taskData.map((element) => TaskModel.formJson(element)).toList();
+    tasks = HiveStorageManager().loadTasks();
 
     _loadData();
     _calculatePercent();
@@ -45,9 +43,7 @@ class TasksController extends ChangeNotifier {
     _loadData();
     _calculatePercent();
 
-    final updateTask = tasks.map((e) => e.toJson()).toList();
-
-    await FileStorageManager().saveTasks(updateTask);
+    await HiveStorageManager().saveTasks(tasks);
 
     notifyListeners();
   }
@@ -62,8 +58,7 @@ class TasksController extends ChangeNotifier {
     _loadData();
     _calculatePercent();
 
-    final updatedTask = tasks.map((e) => e.toJson()).toList();
-    await FileStorageManager().saveTasks(updatedTask);
+     await HiveStorageManager().saveTasks(tasks);
 
     notifyListeners();
   }
