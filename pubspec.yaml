@@ -20,12 +20,10 @@ dependencies:
   image_picker: ^1.2.3
   path_provider: ^2.1.6
   provider: ^6.1.5+1
-#  gap: ^3.0.1
+  flutter_native_splash: ^2.4.8
   hive_ce_flutter: ^2.3.4
-
-
-
   flutter_screenutil: ^5.9.3
+  google_fonts: ^9.0.0
 
 
 

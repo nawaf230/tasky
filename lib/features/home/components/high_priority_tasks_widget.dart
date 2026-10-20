@@ -71,7 +71,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
                               CustomCheckBox(
                                 value: task.isDone,
                                 onChanged: (bool? value) {
-                                  final index = tasksList.indexWhere(
+                                  tasksList.indexWhere(
                                     (element) => element.id == task.id,
                                   );
                                   controller.doneTask(value, task.id);

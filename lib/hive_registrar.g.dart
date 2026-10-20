@@ -2,7 +2,7 @@
 // Do not modify
 // Check in to version control
 
-import 'package:hive_ce/hive_ce.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:tasky/models/task_model.dart';
 
 extension HiveRegistrar on HiveInterface {

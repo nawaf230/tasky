@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-// in this class I use Singleton Design Patterns.
+// In this class I use Singleton Design Patterns.
 class PreferencesManager {
   static final PreferencesManager _instance = PreferencesManager._internal();
   late final SharedPreferences _preferences;

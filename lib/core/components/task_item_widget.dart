@@ -252,7 +252,7 @@ class TaskItemWidget extends StatelessWidget {
                             listTasks[index] = newModel;
 
                             await HiveStorageManager().saveTasks(listTasks);
-
+                  
                             Navigator.of(context).pop(true);
                           }
                         },
