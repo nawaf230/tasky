@@ -26,9 +26,8 @@ class CustomTextFormField extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(
-            context,
-          ).textTheme.displaySmall!.copyWith(fontSize: AppSizes.sp16),
+          style: Theme.of(context).textTheme.displaySmall!
+              .copyWith(fontSize: AppSizes.sp16),
         ),
         SizedBox(height: AppSizes.h8),
         TextFormField(
